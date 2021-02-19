@@ -1,0 +1,30 @@
+{
+    "name": "sahifedp/sdp-menu-manager",
+    "description": "Management console and helpers for adding menus to \"Laravel SDP\" platform",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohsen Bagheri",
+            "email": "aquarius.native@gmail.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": ">=5.5",
+        "spatie/laravel-permission": "^4.*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "sahifedp\\sdpMenuManager\\SdpMenuManagerServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "sahifedp\\MenuManager\\": "src/"
+        }
+    }
+}
