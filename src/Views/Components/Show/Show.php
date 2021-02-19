@@ -1,7 +1,7 @@
 <?php
 
 
-namespace sahifedp\MenuManager;
+namespace sahifedp\MenuManager\Views\Components\Show;
 
 use Illuminate\View\Component;
 use sahifedp\MenuManager\MenuManager;

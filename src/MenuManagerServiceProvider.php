@@ -3,6 +3,7 @@
 namespace packages\sahifedp\MenuManager;
 
 use Illuminate\Support\ServiceProvider;
+use sahifedp\MenuManager\Views\Components\Show\Show;
 
 class MenuManagerServiceProvider extends ServiceProvider
 {
