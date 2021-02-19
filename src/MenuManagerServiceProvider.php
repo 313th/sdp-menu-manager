@@ -1,6 +1,6 @@
 <?php
 
-namespace packages\sahifedp\MenuManager;
+namespace sahifedp\MenuManager;
 
 use Illuminate\Support\ServiceProvider;
 use sahifedp\MenuManager\Views\Components\Show\Show;

@@ -15,7 +15,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "sahifedp\\sdpMenuManager\\SdpMenuManagerServiceProvider"
+                "sahifedp\\MenuManager\\MenuManagerServiceProvider"
             ],
             "aliases": {
 
