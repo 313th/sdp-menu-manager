@@ -3,6 +3,7 @@
 namespace sahifedp\MenuManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property integer $id
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property integer permission_id
  * @property string $icon
+ * @property integer $arrangement
  * @property string $created_at
  * @property string $updated_at
  * @property MenuItem[] $menuItems
@@ -34,5 +36,12 @@ class MenuGroup extends Model
     public function menuItems()
     {
         return $this->hasMany(MenuItem::class, 'group_id');
+    }
+
+    public function getMyItemsAttribute(){
+        return MenuItem::where(['group_id'=>$this->id])
+            ->whereIn('permission_id',Auth::user()->getAllPermissions()->pluck('id'))
+            ->orderBy('arrangement')
+            ->get();
     }
 }

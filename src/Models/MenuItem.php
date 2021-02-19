@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Permission;
  * @property string $route
  * @property integer $permission_id
  * @property string $icon
+ * @property integer $arrangement
  * @property string $created_at
  * @property string $updated_at
  * @property MenuGroup $menuGroup

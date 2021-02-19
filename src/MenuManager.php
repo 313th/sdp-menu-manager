@@ -49,11 +49,8 @@ class MenuManager {
     public static function myMenu(){
         global $permissions;
         $permissions = Auth::user()->getAllPermissions()->pluck('id');
-        return MenuGroup::with('menuItems')
-            ->whereIn('permission_id',$permissions)
-            ->whereHas('menuItems',function ($query){
-                global $permissions;
-                return $query->whereIn('permission_id',$permissions);
-            })->get();
+        return MenuGroup::whereIn('permission_id',$permissions)
+            ->orderBy('arrangement')
+            ->get();
     }
 }

@@ -19,6 +19,7 @@ class CreateMenuTables extends Migration
             $table->string('title');
             $table->unsignedBigInteger('permission_id');
             $table->string('icon');
+            $table->unsignedInteger('arrangement');
             $table->timestamps();
             $table->unique(['name']);
             $table->foreign('permission_id')
@@ -33,6 +34,7 @@ class CreateMenuTables extends Migration
             $table->string('route');
             $table->unsignedBigInteger('permission_id');
             $table->string('icon');
+            $table->unsignedInteger('arrangement');
             $table->unsignedBigInteger('group_id');
             $table->timestamps();
             $table->unique(['name','route']);
