@@ -10,7 +10,7 @@ use sahifedp\MenuManager\Models\MenuItem;
 use Spatie\Permission\Models\Permission;
 
 class MenuManager {
-    public static function newGroup($name,$title,$permissions,$icon="th"){
+    public static function newGroup($name,$title,$permissions,$arrangement=0,$icon="th"){
         if(Permission::where(['name'=>$name])->count() > 0){
             return false;
         }
@@ -21,13 +21,14 @@ class MenuManager {
             $model->name = $name;
             $model->title = $title;
             $model->permission_id = $permission_model->id;
+            $model->arrangement = $arrangement;
             $model->icon = $icon;
             $status = $status && $model->save();
         }
         return $status;
     }
 
-    public static function newItem($group_id, $name, $title, $route, $permissions, $icon="circle-o"){
+    public static function newItem($group_id, $name, $title, $route, $permissions,$arrangement=0, $icon="circle-o"){
         if(Permission::where(['name'=>$name])->count() > 0){
             return false;
         }
@@ -40,6 +41,7 @@ class MenuManager {
             $model->title = $title;
             $model->route = $route;
             $model->permission_id = $permission_model->id;
+            $model->arrangement = $arrangement;
             $model->icon = $icon;
             $status = $status && $model->save();
         }
