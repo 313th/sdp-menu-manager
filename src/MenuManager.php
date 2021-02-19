@@ -54,6 +54,6 @@ class MenuManager {
             ->whereHas('menuItems',function ($query){
                 global $permissions;
                 return $query->whereIn('permission_id',$permissions);
-            });
+            })->get();
     }
 }
