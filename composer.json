@@ -10,7 +10,7 @@
     ],
     "require": {
         "laravel/framework": ">=5.5",
-        "spatie/laravel-permission": "^4.*"
+        "spatie/laravel-permission": "^4.0"
     },
     "extra": {
         "laravel": {
