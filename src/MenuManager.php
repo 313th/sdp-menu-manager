@@ -51,7 +51,7 @@ class MenuManager {
         $permissions = Auth::user()->getAllPermissions()->pluck('id');
         return MenuGroup::with('menuItems')
             ->whereIn('permission_id',$permissions)
-            ->whereHas('menu_items',function ($query){
+            ->whereHas('menuItems',function ($query){
                 global $permissions;
                 return $query->whereIn('permission_id',$permissions);
             });
