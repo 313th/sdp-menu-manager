@@ -24,6 +24,7 @@ class MenuManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__.'/Views', 'menu');
         $this->loadViewComponentsAs('menu', [
             Show::class
         ]);

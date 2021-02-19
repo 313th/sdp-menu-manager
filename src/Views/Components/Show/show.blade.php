@@ -20,7 +20,7 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    @foreach($menu->menu_items as $item)
+                    @foreach($menu->menuItems as $item)
                             <li id="{{ $item->name }}" class="nav-item">
                                 <a href="{{ route($item->route) }}" class="nav-link @if(Request::url() == route($item->route)) active @endif">
                                     <i class="fa fa-{{ $item->icon }} nav-icon"></i>

@@ -27,6 +27,6 @@ class Show extends Component
     public function render()
     {
         $menus = MenuManager::myMenu();
-        return view('menu::components.Show.show',['menus'=>$menus]);
+        return view('menu::Components.Show.show',['menus'=>$menus]);
     }
 }

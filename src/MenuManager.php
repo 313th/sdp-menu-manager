@@ -4,6 +4,7 @@
 namespace sahifedp\MenuManager;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use sahifedp\MenuManager\Models\MenuGroup;
 use sahifedp\MenuManager\Models\MenuItem;
 use Spatie\Permission\Models\Permission;
@@ -47,8 +48,8 @@ class MenuManager {
 
     public static function myMenu(){
         global $permissions;
-        $permissions = App::user()->getAllPermissions()->pluck('id');
-        return MenuGroup::with('menu_items')
+        $permissions = Auth::user()->getAllPermissions()->pluck('id');
+        return MenuGroup::with('menuItems')
             ->whereIn('permission_id',$permissions)
             ->whereHas('menu_items',function ($query){
                 global $permissions;
