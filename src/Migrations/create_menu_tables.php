@@ -17,22 +17,17 @@ class CreateMenuTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('title');
-            $table->unsignedBigInteger('permission_id');
             $table->string('icon');
             $table->unsignedInteger('arrangement');
             $table->timestamps();
             $table->unique(['name']);
-            $table->foreign('permission_id')
-                ->references('id')
-                ->on((new \Spatie\Permission\Models\Permission)->getTable())
-                ->onDelete('cascade');
         });
+
         Schema::create('menu_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('title');
             $table->string('route');
-            $table->unsignedBigInteger('permission_id');
             $table->string('icon');
             $table->unsignedInteger('arrangement');
             $table->unsignedBigInteger('group_id');
@@ -42,11 +37,42 @@ class CreateMenuTables extends Migration
                 ->references('id')
                 ->on('menu_groups')
                 ->onDelete('cascade');
+        });
+
+        Schema::create('menu_groups_permissions', function (Blueprint $table) {
+            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('permission_id');
+
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('menu_groups')
+                ->onDelete('cascade');
+
             $table->foreign('permission_id')
                 ->references('id')
                 ->on((new \Spatie\Permission\Models\Permission)->getTable())
                 ->onDelete('cascade');
+
+            $table->primary(['group_id','permission_id']);
         });
+
+        Schema::create('menu_items_permissions', function (Blueprint $table) {
+            $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('permission_id');
+
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('menu_items')
+                ->onDelete('cascade');
+
+            $table->foreign('permission_id')
+                ->references('id')
+                ->on((new \Spatie\Permission\Models\Permission)->getTable())
+                ->onDelete('cascade');
+
+            $table->primary(['item_id','permission_id']);
+        });
+
     }
 
     /**

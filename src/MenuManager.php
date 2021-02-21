@@ -11,47 +11,51 @@ use Spatie\Permission\Models\Permission;
 
 class MenuManager {
     public static function newGroup($name,$title,$permissions,$arrangement=0,$icon="th"){
-        if(Permission::where(['name'=>$name])->count() > 0){
-            return false;
-        }
-        $status = TRUE;
+        $permission_ids = [];
         foreach(explode('|',$permissions) as $permission) {
             $permission_model = Permission::firstOrCreate(['name' => $permission]);
-            $model = new MenuGroup;
-            $model->name = $name;
-            $model->title = $title;
-            $model->permission_id = $permission_model->id;
-            $model->arrangement = $arrangement;
-            $model->icon = $icon;
-            $status = $status && $model->save();
+            $permission_ids[] = $permission_model->id;
         }
-        return $status;
+        if(empty($permission_ids)){
+            return false;
+        }
+        $model = MenuGroup::firstOrCreate([
+            'name' => $name,
+            'title' => $title,
+            'arrangement' => $arrangement,
+            'icon' => $icon,
+        ]);
+        $model->permissions()->sync($permission_ids);
+        return $model;
     }
 
     public static function newItem($group_id, $name, $title, $route, $permissions,$arrangement=0, $icon="circle-o"){
-        if(Permission::where(['name'=>$name])->count() > 0){
+        $permission_ids = [];
+        foreach(explode('|',$permissions) as $permission) {
+            $permission_model = Permission::firstOrCreate(['name' => $permission]);
+            $permission_ids[] = $permission_model->id;
+        }
+        if(empty($permission_ids)){
             return false;
         }
-        $status = TRUE;
-        foreach(explode('|',$permissions) as $permission) {
-            $permission_model = Permission::firstOrCreate(['name'=>$permission]);
-            $model = new MenuItem;
-            $model->group_id = $group_id;
-            $model->name = $name;
-            $model->title = $title;
-            $model->route = $route;
-            $model->permission_id = $permission_model->id;
-            $model->arrangement = $arrangement;
-            $model->icon = $icon;
-            $status = $status && $model->save();
-        }
-        return $status;
+
+        $model = MenuItem::firstOrCreate([
+            'group_id' => $group_id,
+            'name' => $name,
+            'title' => $title,
+            'route' => $route,
+            'arrangement' => $arrangement,
+            'icon' => $icon,
+        ]);
+        $model->permissions()->sync($permission_ids);
+        return $model;
     }
 
     public static function myMenu(){
-        global $permissions;
-        $permissions = Auth::user()->getAllPermissions()->pluck('id');
-        return MenuGroup::whereIn('permission_id',$permissions)
+        return MenuGroup::
+            whereHas('permissions',function ($query){
+                return $query->whereIn('permission_id',Auth::user()->getAllPermissions()->pluck('id'));
+            })
             ->orderBy('arrangement')
             ->get();
     }

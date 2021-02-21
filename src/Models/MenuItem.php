@@ -11,7 +11,6 @@ use Spatie\Permission\Models\Permission;
  * @property string $name
  * @property string $title
  * @property string $route
- * @property integer $permission_id
  * @property string $icon
  * @property integer $arrangement
  * @property string $created_at
@@ -30,7 +29,7 @@ class MenuItem extends Model
     /**
      * @var array
      */
-    protected $fillable = ['group_id', 'name', 'title', 'route', 'permission_id', 'icon', 'created_at', 'updated_at'];
+    protected $fillable = ['group_id', 'name', 'title', 'route', 'arrangement', 'icon', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -40,11 +39,15 @@ class MenuItem extends Model
         return $this->belongsTo(MenuGroup::class, 'group_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function permissionModel()
-    {
-        return $this->belongsTo(Permission::class, 'permission_id');
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+//     */
+//    public function permissionModel()
+//    {
+//        return $this->belongsTo(Permission::class, 'permission_id');
+//    }
+
+    public function permissions(){
+        return $this->belongsToMany(Permission::class,'menu_items_permissions','item_id','permission_id');
     }
 }
