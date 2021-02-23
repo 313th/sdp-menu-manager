@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use sahifedp\MenuManager\Models\MenuGroup;
 use sahifedp\MenuManager\Models\MenuItem;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class MenuManager {
     public static function newGroup($name,$title,$permissions,$arrangement=0,$icon="th"){
         $permission_ids = [];
+        $superAdmin = Role::where(['name'=>'Super Admin'])->first();
         foreach(explode('|',$permissions) as $permission) {
             $permission_model = Permission::firstOrCreate(['name' => $permission]);
             $permission_ids[] = $permission_model->id;
@@ -19,6 +21,7 @@ class MenuManager {
         if(empty($permission_ids)){
             return false;
         }
+        $superAdmin->givePermissionTo($permission_ids);
         $model = MenuGroup::firstOrCreate([
             'name' => $name,
             'title' => $title,
