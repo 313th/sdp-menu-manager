@@ -22,12 +22,13 @@ class MenuManager {
             return false;
         }
         $superAdmin->givePermissionTo($permission_ids);
-        $model = MenuGroup::firstOrCreate([
+        $model = MenuGroup::firstOrNew([
             'name' => $name,
-            'title' => $title,
-            'arrangement' => $arrangement,
-            'icon' => $icon,
         ]);
+        $model->title = $title;
+        $model->arrangement = $arrangement;
+        $model->icon = $icon;
+        $model->save();
         $model->permissions()->sync($permission_ids);
         return $model;
     }
@@ -42,14 +43,15 @@ class MenuManager {
             return false;
         }
 
-        $model = MenuItem::firstOrCreate([
+        $model = MenuItem::firstOrNew([
             'group_id' => $group_id,
             'name' => $name,
-            'title' => $title,
-            'route' => $route,
-            'arrangement' => $arrangement,
-            'icon' => $icon,
         ]);
+        $model->title = $title;
+        $model->arrangement = $arrangement;
+        $model->icon = $icon;
+        $model->route = $route;
+        $model->save();
         $model->permissions()->sync($permission_ids);
         return $model;
     }
