@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class MenuManager {
+    //TODO: Define DELETE method for menu items and menu groups
     public static function newGroup($name,$title,$permissions,$arrangement=0,$icon="th"){
         $permission_ids = [];
         $superAdmin = Role::where(['name'=>'Super Admin'])->first();
